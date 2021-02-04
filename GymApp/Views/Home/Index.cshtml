@@ -1,2 +1,19 @@
-﻿<h1>Gym list</h1>
+﻿@model List<GymViewModel>
+<h1>Featured gyms</h1>
+<div class="card-columns">
+    @foreach (var gym in Model)
+    {
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <img class="card-img-top" src="~/images/gym.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@gym.Name</h5>
+                <span>There are @gym.NumberOfOpinions opinions.</span>
 
+                <p class="card-text">@gym.Description</p>
+                <a href="#" class="btn btn-primary">Check opinions</a>
+            </div>
+        </div>
+
+    }
+
+</div>

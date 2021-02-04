@@ -4,14 +4,16 @@ using GymApp.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GymApp.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210204160232_updatedGymTable")]
+    partial class updatedGymTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,26 +49,6 @@ namespace GymApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Gyms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Lea 213, Kraków",
-                            Description = "Siłownia lepsza niż inne!",
-                            IsActive = true,
-                            Name = "Fitness Platinium",
-                            Website = "fitnesplatinium.pl"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Stawowa 16, Kraków",
-                            Description = "Siłownia lepsza niż inne!",
-                            IsActive = true,
-                            Name = "Fitness Platinium",
-                            Website = "fitnesplatinium.pl"
-                        });
                 });
 
             modelBuilder.Entity("GymApp.Models.GymOpinion", b =>

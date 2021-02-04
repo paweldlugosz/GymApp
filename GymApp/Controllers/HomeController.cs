@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using GymApp.Database;
 using GymApp.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymApp.Controllers
 {
@@ -27,7 +28,21 @@ namespace GymApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var gyms = _gymDb.Gyms.Include(c => c.Opinions);
+            var gymsViewModel = new List<GymViewModel>();
+            foreach (var gym in gyms)
+            {
+                gymsViewModel.Add(new GymViewModel()
+                {
+                    Name = gym.Name,
+                    Description = gym.Description,
+                    Id = gym.Id,
+                    Image = gym.ImageUrl,
+                    NumberOfOpinions = gym.Opinions.Count()
+                });
+            }
+
+            return View(gymsViewModel);
         }
 
         public IActionResult Login()
@@ -48,7 +63,7 @@ namespace GymApp.Controllers
             if (username == null || username.Length == 0)
             {
                 errors.Add("Username is required.");
-            } 
+            }
             else if (_gymDb.Users.ToList().Find(user => user.Login == username) != null)
             {
                 return View(SignupViewModel.newErrorInstance("A user with that name already exists"));
@@ -99,7 +114,7 @@ namespace GymApp.Controllers
                 var claimsIdentity = new ClaimsIdentity(claims, "Login");
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                 return Redirect(returnUrl != null ? returnUrl : "/");
-            } 
+            }
             else
             {
                 return View(new LoginViewModel("Incorrect data entered."));
