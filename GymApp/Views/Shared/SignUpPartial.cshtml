@@ -1,0 +1,12 @@
+﻿
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="card no-authorized">
+        <div class="card-body">
+            <h5 class="card-title">Log in or sign in</h5>
+            <p class="card-text">In order to create opinions, please login or create a new account.</p>
+            @Html.ActionLink("Login in", "Login", "Home", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Sign up", "Signup", "Home", null,  new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}

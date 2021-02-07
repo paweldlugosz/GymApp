@@ -89,3 +89,7 @@ body {
         .cards-container div:first-child {
             margin: 0;
         }
+
+.no-authorized .btn{
+  margin-right: 50px;
+}

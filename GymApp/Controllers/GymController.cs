@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GymApp.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +11,20 @@ namespace GymApp.Controllers
 {
     public class GymController : Controller
     {
-        // GET: GymController
-        public ActionResult Index()
+        private readonly GymDbContext gymDbContext;
+
+        public GymController(GymDbContext gymDbContext)
         {
-            return View();
+            this.gymDbContext = gymDbContext;
         }
 
         // GET: GymController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+
+            var gym = gymDbContext.Gyms.Include(d=>d.Opinions).FirstOrDefault(c => c.Id == id);
+
+            return View("Index", gym);
         }
 
         // GET: GymController/Create

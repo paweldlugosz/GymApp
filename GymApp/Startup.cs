@@ -33,6 +33,7 @@ namespace GymApp
                 });
             services.AddControllersWithViews();
             services.AddDbContext<GymDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GymDB")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
