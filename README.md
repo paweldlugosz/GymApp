@@ -159,13 +159,19 @@ Do poprawnego działania potrzebujemy zainstalowanego SQL Serwera, a także SQL 
 2.	Oraz SQL Management Studio
 https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15
 Po uruchomieniu Panelu zarządania IIS kolejno dodajemy nowa strone
+
  ![](screeny/Obraz2.png)
+ 
 Screenshot 2. Dodanie aplikacji webowej do IIS
+
  ![](screeny/Obraz3.png)
+
 Screenshot 3. Utworzenie aplikacji webowej
 Ustawiając lokalizacje do folderu gdzie zpublikowaliśmy aplikacje .NET-owa.
 Należy również pamiętać o odpowiednim ustawieniu puli aplikacyjnej:
-  ![](screeny/Obraz4.png)
+
+![](screeny/Obraz4.png)
+
 Screenshot 4. Konfiguracja app pool aplikacji
 I wybranie jak poniżej 
  
