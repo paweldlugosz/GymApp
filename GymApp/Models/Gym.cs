@@ -19,5 +19,10 @@ namespace GymApp.Models
         public bool IsActive { get; set; }
 
         public ICollection<GymOpinion> Opinions { get; set; }
+
+        public Gym()
+        {
+            Opinions = new List<GymOpinion>();
+        }
     }
 }

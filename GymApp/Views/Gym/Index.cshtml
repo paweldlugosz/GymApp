@@ -1,44 +1,85 @@
 ﻿
 @model Gym
 
-<h1>@Model.Name</h1>
-<h2>@Model.Address</h2>
+<br />
+<h2><a href="@Model.Website">@Model.Name</a></h2>
+<hr />
+<h3>@Model.Address</h3>
 <div>
     <p>@Model.Description</p>
 </div>
-<iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Address&key=AIzaSyCtyYDQn4xZsC4Zar4-W2E-BuD2f0iM-OQ" allowfullscreen></iframe>
+<div class="holds-the-iframe">
+    <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Address&key=AIzaSyCtyYDQn4xZsC4Zar4-W2E-BuD2f0iM-OQ" allowfullscreen></iframe>
+    <hr />
 
+</div>
 
+    <h3>Opinions</h3>
+    <hr />
+    <div class="container mt-5 margin">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-12">
+                <div class="d-flex flex-column comment-section">
 
-
-<h2>Opinions</h2>
-<div class="container mt-5">
-    <div class="d-flex justify-content-center row">
-        <div class="col-md-12">
-            <div class="d-flex flex-column comment-section">
-
-                @foreach (var opinion in Model.Opinions)
-                {
-    <p>@opinion.Opinion</p>
+                    @foreach (var opinion in Model.Opinions)
+                    {          
                     <div class="bg-white p-2">
                         <div class="d-flex flex-row user-info">
-                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@opinion.AuthorEmail</span><span class="date text-black-50">Shared publicly -@opinion.Created.ToShortDateString()</span></div>
+                            <div class="d-flex flex-column justify-content-start ml-2">
+                            <span class="d-block font-weight-bold name">@opinion.Author</span>
+                            <p class="date text-black-50">Shared publicly -@opinion.Created.ToShortDateString()</p></div>
                         </div>
-                        <div class="mt-2">
-                            <p class="comment-text">@opinion.Opinion</p>
+                        <div class="mt-3">
+                            <h2 class="comment-text">@opinion.Opinion</h2>
                         </div>
+                        <hr />
                     </div>}
-                @if (User.Identity.IsAuthenticated)
-                {
-    <div class="bg-light p-2">
-        <p>Share opinion</p>
-        <div class="d-flex flex-row align-items-start"><textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
-        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button">Share opinion!</button></div>
-    </div> }
-else
-{
-@await Html.PartialAsync("SignUpPartial")}
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <div class="bg-light p-2">
+                        <p>Share opinion</p>
+                        <input type="hidden" id="current-gym" value="@Model.Id" />
+                        <div class="d-flex flex-row align-items-start"><textarea name="opinion" id="opinion" class="form-control ml-1 shadow-none textarea"></textarea></div>
+                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" id="opinion-button" type="button">Share opinion!</button></div>
+                    </div>
+        }
+    else
+    {
+            @await Html.PartialAsync("SignUpPartial")
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+@section scripts {
+ <script>
+     const opinionButton = document.getElementById('opinion-button');
+     opinionButton.addEventListener("click", function () {
+         const currentOpinion = $('textarea#opinion').val();
+         const currentGym = parseInt($('#current-gym').val());
+         if (currentOpinion) {
+             const newOpinion = {
+                 opinion: currentOpinion,
+                 gymId: currentGym
+             }
+             console.log(newOpinion);
+             $.ajax({
+                 url: '/Gym/AddOpinion',
+                 type: 'POST',
+                 data: JSON.stringify(newOpinion),
+                 contentType: "application/json; charset=utf-8",
+                 success: function (res) {
+                     window.location.reload();
+                 },
+                 error: function (res) {
+                     alert("Could not add opinion!");
+                 }
+             });
+         }
+
+
+     })
+ </script>
+}

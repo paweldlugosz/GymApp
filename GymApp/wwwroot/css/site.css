@@ -93,3 +93,17 @@ body {
 .no-authorized .btn{
   margin-right: 50px;
 }
+
+.carousel-caption {
+    background-color: black;
+    opacity: 0.7;
+}
+
+.pb-3 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.holds-the-iframe {
+    background: url(../images/128x128.gif) center center no-repeat;
+}

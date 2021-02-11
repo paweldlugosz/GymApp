@@ -11,7 +11,7 @@ namespace GymApp.Models
 
         public string Opinion { get; set; }
 
-        public string AuthorEmail { get; set; }
+        public string Author { get; set; }
 
         public DateTime Created { get; set; }
 

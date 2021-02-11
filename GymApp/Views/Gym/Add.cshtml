@@ -1,1 +1,37 @@
-﻿<h1>Gym Adding Form</h1>
+﻿@model GymViewModel
+
+
+<h3>Add gym!</h3>
+<p>Add the gym you like so it can gather opinions from other users!</p>
+<hr />
+
+@if(ViewBag.InvalidForm != null && ViewBag.InvalidForm)
+{
+    <p class="alert alert-danger">Please populate all fields!</p>
+}
+<div class="container margin"> 
+    <form method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input name="name" type="text" class="form-control" id="name" placeholder="Enter gym name" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" id="description" placeholder="Enter gym description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="website">Website</label>
+            <input name="website" class="form-control" id="website" placeholder="Enter gym website url" />
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input name="address" class="form-control" id="address" placeholder="Enter gym address" />
+        </div>
+
+        <button type="submit" class="btn btn-danger float-right">Add gym</button>
+    </form>
+
+</div>

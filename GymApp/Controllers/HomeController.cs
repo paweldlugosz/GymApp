@@ -51,6 +51,32 @@ namespace GymApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Search([FromQuery] string search)
+        {
+            var gyms = _gymDb.Gyms.Include(c => c.Opinions).Where(c=>c.Name.ToLower().Contains(search.ToLower()));
+            var gymsViewModel = new List<GymViewModel>();
+            foreach (var gym in gyms)
+            {
+                gymsViewModel.Add(new GymViewModel()
+                {
+                    Name = gym.Name,
+                    Description = gym.Description,
+                    Id = gym.Id,
+                    Image = gym.ImageUrl,
+                    NumberOfOpinions = gym.Opinions.Count()
+                });
+            }
+
+            var searchViewModel = new SearchViewModel()
+            {
+                Gyms = gymsViewModel,
+                Search = search
+            };
+
+            return View("Search", searchViewModel);
+        }
+
+        [HttpGet]
         public IActionResult Signup()
         {
             return View();
